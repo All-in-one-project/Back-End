@@ -31,7 +31,7 @@ public class Student {
     @Column(name = "student_name", length = 20, nullable = false)
     private String studentName;
 
-    @Column(name = "grade", length = 1)
+    @Column(name = "grade", length = 30)
     private String grade;
 
     @Column(name = "max_credits")
