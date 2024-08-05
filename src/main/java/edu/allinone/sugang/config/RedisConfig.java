@@ -2,7 +2,6 @@ package edu.allinone.sugang.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.connection.ReactiveRedisConnectionFactory;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
@@ -14,7 +13,6 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 public class RedisConfig {
 
     @Bean
-    @Primary
     public ReactiveRedisConnectionFactory reactiveRedisConnectionFactory() {
         return new LettuceConnectionFactory("43.202.223.188", 6379);
     }
