@@ -26,8 +26,11 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(request -> request
-                        .anyRequest().permitAll()
+
+                                .anyRequest().permitAll()
+
                         // 위에서 명시한 경로를 제외한 모든 요청에 대해 인증된 사용자만 접근할 수 있도록 설정
+
                 )
                 .formLogin(login -> login
                         .loginPage("/login") // 커스텀 로그인 페이지 설정
