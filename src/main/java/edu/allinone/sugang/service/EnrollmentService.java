@@ -4,6 +4,7 @@ import edu.allinone.sugang.domain.Enrollment;
 import edu.allinone.sugang.domain.Lecture;
 import edu.allinone.sugang.domain.Student;
 import edu.allinone.sugang.dto.response.CreditDTO;
+import edu.allinone.sugang.dto.response.EnrollmentResponseDTO;
 import edu.allinone.sugang.dto.response.LectureSummaryDTO;
 import edu.allinone.sugang.dto.response.LectureTimeDTO;
 import edu.allinone.sugang.repository.*;
@@ -20,7 +21,6 @@ public class EnrollmentService {
 
     private final EnrollmentRepository enrollmentRepository;
     private final LectureRepository lectureRepository;
-    private final SubjectRepository subjectRepository;
     private final StudentRepository studentRepository;
     private final ScheduleRepository scheduleRepository;
 
@@ -90,6 +90,27 @@ public class EnrollmentService {
 
     /**
      * 수강 신청 내역 조회
+     */
+    @Transactional
+    public List<EnrollmentResponseDTO> getEnrollmentDTO(Integer studentId) {
+        // 1. 학생 정보 가져오기
+        Student student = studentRepository.findById(studentId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 학생이 존재하지 않습니다."));
+
+        // 2. 수강 신청 내역 조회
+        List<Enrollment> enrollments = enrollmentRepository.findByStudentId(studentId);
+
+        return enrollments.stream()
+                .map(enrollment -> new EnrollmentResponseDTO(
+                        enrollment.getId(),
+                        enrollment.getStudent().getId(),
+                        enrollment.getLecture().getId()
+                ))
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Enrollment 조회
      */
     @Transactional
     public List<Enrollment> getEnrollments(Integer studentId) {
