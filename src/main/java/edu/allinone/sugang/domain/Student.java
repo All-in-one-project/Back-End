@@ -47,8 +47,8 @@ public class Student {
     @OneToMany(mappedBy = "student", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Enrollment> enrollments;
 
-    @OneToMany(mappedBy = "student", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<Basket> baskets;
+//    @OneToMany(mappedBy = "student", cascade = CascadeType.REMOVE, orphanRemoval = true)
+//    private List<Basket> baskets;
 
     /* -------------------------------------------- */
     /* ----------------- Functions ---------------- */
