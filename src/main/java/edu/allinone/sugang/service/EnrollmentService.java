@@ -4,7 +4,7 @@ import edu.allinone.sugang.domain.Enrollment;
 import edu.allinone.sugang.domain.Lecture;
 import edu.allinone.sugang.domain.Student;
 import edu.allinone.sugang.dto.response.CreditDTO;
-import edu.allinone.sugang.dto.response.EnrollmentResponseDTO;
+import edu.allinone.sugang.dto.response.EnrollmentInfoDTO;
 import edu.allinone.sugang.dto.response.LectureSummaryDTO;
 import edu.allinone.sugang.dto.response.LectureTimeDTO;
 import edu.allinone.sugang.repository.*;
@@ -49,17 +49,22 @@ public class EnrollmentService {
             throw new IllegalArgumentException("신청 가능 학점을 초과했습니다.");
         }
 
-        // 4. 수강 신청
+        // 4. 이미 신청한 과목인지 확인
+        if (enrollmentRepository.findByStudentIdAndLectureId(studentId, lectureId).isPresent()) {
+            throw new IllegalArgumentException("이미 신청한 강의입니다.");
+        }
+
+        // 5. 수강 신청
         enrollmentRepository.save(Enrollment.builder()
                 .student(student)
                 .lecture(lecture)
                 .build()
         );
 
-        // 5. 신청 인원 증가
+        // 6. 신청 인원 증가
         lecture.incrementEnrolledCount();
 
-        // 6. 신청 가능 학점 감소
+        // 7. 신청 가능 학점 감소
         student.decreaseMaxCredits(lecture.getSubject().getCredit());
     }
 
@@ -92,7 +97,7 @@ public class EnrollmentService {
      * 수강 신청 내역 조회
      */
     @Transactional
-    public List<EnrollmentResponseDTO> getEnrollmentDTO(Integer studentId) {
+    public List<EnrollmentInfoDTO> getEnrollmentDTO(Integer studentId) {
         // 1. 학생 정보 가져오기
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 학생이 존재하지 않습니다."));
@@ -101,10 +106,12 @@ public class EnrollmentService {
         List<Enrollment> enrollments = enrollmentRepository.findByStudentId(studentId);
 
         return enrollments.stream()
-                .map(enrollment -> new EnrollmentResponseDTO(
+                .map(enrollment -> new EnrollmentInfoDTO(
                         enrollment.getId(),
                         enrollment.getStudent().getId(),
-                        enrollment.getLecture().getId()
+                        enrollment.getLecture().getId(),
+                        enrollment.getLecture().getLectureNumber(),
+                        enrollment.getLecture().getSubject().getSubjectDivision()
                 ))
                 .collect(Collectors.toList());
     }
