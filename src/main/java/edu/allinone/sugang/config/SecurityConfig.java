@@ -9,7 +9,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebSecurity // Spring Security의 웹 보안 지원을 활성화
@@ -22,26 +23,38 @@ public class SecurityConfig {
     }
 
     @Bean
-    // 어떤 URL 경로를 보안해야 하고 어떤 경로를 보안하지 않아야 하는지 정의
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/", "/login", "/static/**", "/home").permitAll()
-                        .anyRequest().authenticated()
+                                .anyRequest().permitAll()
                         // 위에서 명시한 경로를 제외한 모든 요청에 대해 인증된 사용자만 접근할 수 있도록 설정
 
                 )
-                .formLogin(login -> login
-                        .loginPage("/login") // 커스텀 로그인 페이지 설정
+                .formLogin(form -> form
+                        .loginPage("/login")
                         .defaultSuccessUrl("/", true)
-                        // 성공 시 이동 경로 (임의로 작성, 나중에 구현 시 수정)
-                        .usernameParameter("studentNumber") // 로그인 폼에서 사용자 이름 필드 이름 설정
-                        .passwordParameter("studentPassword") // 로그인 폼에서 비밀번호 필드 이름 설정
-                        .permitAll() // 로그인 폼에 모든 사용자 접근 가능
+                        .usernameParameter("studentNumber")
+                        .passwordParameter("studentPassword")
+                        .permitAll()
                 )
-                .logout(Customizer.withDefaults()); // 기본 값
+                .logout(logout -> logout.permitAll())
+                .cors(Customizer.withDefaults()) // CORS 설정 추가
+                .csrf(csrf -> csrf.disable()); // CSRF 비활성화
 
         return http.build();
     }
 
+    // CORS 설정을 Spring Security와 함께 사용하기 위해 추가
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**")
+                        .allowedOrigins("http://43.202.223.188")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE")
+                        .allowCredentials(true);
+            }
+        };
+    }
 }
