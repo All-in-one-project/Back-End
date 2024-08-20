@@ -20,4 +20,10 @@ public class DepartmentController {
     public List<DepartmentDTO> getDepartmentsByCollegeId(@PathVariable Integer collegeId) {
         return departmentService.getDepartmentsByCollegeId(collegeId);
     }
+
+    @GetMapping //전체 부서 조회 API 추가
+    public List<DepartmentDTO> getAllDepartments() {
+        return departmentService.getAllDepartments();
+    }
+
 }

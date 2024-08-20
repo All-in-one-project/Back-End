@@ -7,8 +7,6 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 
-@EntityScan(basePackages = "edu.allinone.sugang.domain")
-@EnableJpaRepositories(basePackages = "edu.allinone.sugang.repository")
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class) // 시큐리티에서 제공하는 로그인 기본 화면 제거
 public class SugangApplication {
 
