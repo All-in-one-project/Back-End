@@ -23,6 +23,7 @@ repositories {
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	implementation("org.springframework.boot:spring-boot-starter-data-redis-reactive")
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
@@ -38,9 +39,14 @@ dependencies {
 	runtimeOnly("com.mysql:mysql-connector-j")
 	runtimeOnly("io.netty:netty-resolver-dns-native-macos:4.1.104.Final:osx-aarch_64") // MacOS Silicon 라이브러리 누락 문제
 
-	// Spring Data Redis
-	implementation("org.springframework.boot:spring-boot-starter-data-redis-reactive") // WebFlux + Redis
-	implementation("org.springframework.boot:spring-boot-starter-data-redis") // Redis
+	// Google Speech To Text
+	implementation(platform("com.google.cloud:libraries-bom:26.1.4"))
+	implementation("com.google.cloud:google-cloud-speech")
+	implementation("com.google.protobuf:protobuf-java:3.21.12")
+	implementation("com.fasterxml.jackson.core:jackson-databind")
+
+	// Google Text-to-Speech
+	implementation("com.google.cloud:google-cloud-texttospeech")
 
 	// Mockito
 	testImplementation("org.mockito:mockito-core:3.11.2")
@@ -54,4 +60,3 @@ tasks.withType<Test> {
 tasks.withType<JavaCompile> {
 	options.compilerArgs.add("-parameters")
 }
-
