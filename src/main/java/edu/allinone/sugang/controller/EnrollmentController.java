@@ -1,8 +1,8 @@
 package edu.allinone.sugang.controller;
 
-import edu.allinone.sugang.domain.Enrollment;
 import edu.allinone.sugang.dto.global.ResponseDTO;
 import edu.allinone.sugang.dto.request.EnrollmentDTO;
+import edu.allinone.sugang.dto.response.EnrollmentInfoDTO;
 import edu.allinone.sugang.dto.response.LectureSummaryDTO;
 import edu.allinone.sugang.dto.response.LectureTimeDTO;
 import edu.allinone.sugang.repository.LectureRepository;
@@ -84,7 +84,7 @@ public class EnrollmentController {
     @GetMapping("/{studentId}")
     public ResponseDTO<?> getEnrollments(@PathVariable Integer studentId) {
         try {
-            List<Enrollment> enrollments = enrollmentService.getEnrollments(studentId);
+            List<EnrollmentInfoDTO> enrollments = enrollmentService.getEnrollmentDTO(studentId);
             if (enrollments.isEmpty()) {
                 // 수강 신청 내역이 없으면
                 return new ResponseDTO<>(HttpStatus.OK.value(), "수강신청 내역이 없습니다.");
