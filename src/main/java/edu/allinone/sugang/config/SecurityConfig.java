@@ -52,7 +52,7 @@ public class SecurityConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
                         .allowedOrigins("http://43.202.223.188")
-                        .allowedOrigins("http://localhost:3000")  // React 애플리케이션이 실행되는 주소
+                        .allowedOrigins("http://localhost:3000")  // React 애플리케이션이 실행되는 도메인
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
                         .allowCredentials(true);
             }
