@@ -14,7 +14,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 public class RedisConfig {
 
     @Bean
-    @Primary
+    @Primary // 우선순위 설정해서 Bean 충돌 방지
     public ReactiveRedisConnectionFactory reactiveRedisConnectionFactory() {
         return new LettuceConnectionFactory("43.202.223.188", 6379);
     }
