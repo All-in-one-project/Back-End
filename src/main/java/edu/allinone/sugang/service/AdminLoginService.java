@@ -40,7 +40,7 @@ public class AdminLoginService {
         Admin admin = adminRepository.findByAdminName(username)
                 .orElseThrow(() -> new UsernameNotFoundException("해당하는 유저를 찾을 수 없습니다."));
 
-        // 5. StudentDTO 객체에 studentNumber, studentId, JWT 토큰을 담아 반환
+        // 5. AdminDTO 객체에 adminName, adminId, JWT 토큰을 담아 반환
         return new AdminDTO(admin.getAdminName(), admin.getId(), jwtToken.getAccessToken(), jwtToken.getRefreshToken());
     }
 }
