@@ -2,7 +2,12 @@ package edu.allinone.sugang.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -11,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "student")
-public class Student {
+public class Student implements UserDetails {
     /* -------------------------------------------- */
     /* -------------- Default Column -------------- */
     /* -------------------------------------------- */
@@ -61,5 +66,45 @@ public class Student {
     // 신청 가능 학점 감소
     public void decreaseMaxCredits(int credits) {
         this.maxCredits -= credits;
+    }
+
+    /* -------------------------------------------- */
+    /* ----------------- Overriding --------------- */
+    /* -------------------------------------------- */
+
+    @Override
+    public String getUsername() {
+        return this.studentNumber;
+    }
+
+    @Override
+    public String getPassword() {
+        return this.studentPassword;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        // 학생의 역할을 "USER"로 설정
+        return Collections.singleton(new SimpleGrantedAuthority("USER"));
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

@@ -1,9 +1,9 @@
 package edu.allinone.sugang.service;
 
-import edu.allinone.sugang.domain.Student;
+import edu.allinone.sugang.domain.Admin;
 import edu.allinone.sugang.dto.JwtTokenDTO;
-import edu.allinone.sugang.dto.response.StudentDTO;
-import edu.allinone.sugang.repository.StudentRepository;
+import edu.allinone.sugang.dto.response.AdminDTO;
+import edu.allinone.sugang.repository.AdminRepository;
 import edu.allinone.sugang.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,18 +14,17 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 @Slf4j
-public class StudentLoginService {
-    private final StudentRepository studentRepository;
+public class AdminLoginService {
+    private final AdminRepository adminRepository;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
 
     @Transactional
-    public StudentDTO signIn(String username, String password) {
+    public AdminDTO adminSignIn(String username, String password) {
         // 1. username + password 를 기반으로 Authentication 객체 생성
         // 이때 authentication 은 인증 여부를 확인하는 authenticated 값이 false
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
@@ -38,17 +37,10 @@ public class StudentLoginService {
         JwtTokenDTO jwtToken = jwtTokenProvider.generateToken(authentication);
 
         // 4. 인증된 사용자 정보로부터 studentNumber와 studentId를 조회
-        Student student = studentRepository.findByStudentNumber(username)
+        Admin admin = adminRepository.findByAdminName(username)
                 .orElseThrow(() -> new UsernameNotFoundException("해당하는 유저를 찾을 수 없습니다."));
 
-        return new StudentDTO(
-                student.getStudentNumber(),
-                student.getId(),
-                student.getDepartment().getId(),
-                student.getStudentName(),
-                student.getGrade(),
-                student.getMaxCredits(),
-                jwtToken.getAccessToken(),
-                jwtToken.getRefreshToken());
+        // 5. AdminDTO 객체에 adminName, adminId, JWT 토큰을 담아 반환
+        return new AdminDTO(admin.getAdminName(), admin.getId(), jwtToken.getAccessToken(), jwtToken.getRefreshToken());
     }
 }

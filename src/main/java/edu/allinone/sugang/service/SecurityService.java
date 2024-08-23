@@ -1,37 +1,52 @@
 package edu.allinone.sugang.service;
 
+import edu.allinone.sugang.domain.Admin;
 import edu.allinone.sugang.domain.Student;
-
+import edu.allinone.sugang.repository.AdminRepository;
+import edu.allinone.sugang.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.Optional;
+
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class SecurityService implements UserDetailsService {
 
-    private final StudentLoginService studentLoginService;
+    private final StudentRepository studentRepository;
+    private final AdminRepository adminRepository;
 
     @Override
-    // 주어진 학번 기반으로 사용자 정보 로드
-    public UserDetails loadUserByUsername(String studentNumber) throws UsernameNotFoundException {
-        Optional<Student> findOne = studentLoginService.findOne(studentNumber); // 학번 검색
-        log.info("findOne : {}", findOne); // 검색된 사용자 정보 로그에 기록
-        Student student = findOne.orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 학번입니다."));
-        // 사용자가 존재하지 않으면 UsernameNotFoundException 예외 발생
-        // 위 로그 메세지는 사용자에게 표시되는 메세지가 아니고 예외 객체에 저장됨 -> 로그 파일에 기록
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<Student> studentOptional = studentRepository.findByStudentNumber(username);
+        if (studentOptional.isPresent()) {
+            Student student = studentOptional.get();
+            return new User(
+                    student.getStudentNumber(),
+                    student.getPassword(),
+                    Collections.singleton(new SimpleGrantedAuthority("USER"))
+            );
+        }
 
-        return User.builder()
-                .username(student.getStudentNumber())
-                .password(student.getStudentPassword())
-                .build();
+        Optional<Admin> adminOptional = adminRepository.findByAdminName(username);
+        if (adminOptional.isPresent()) {
+            Admin admin = adminOptional.get();
+            return new User(
+                    admin.getAdminName(),
+                    admin.getPassword(),
+                    Collections.singleton(new SimpleGrantedAuthority("ADMIN"))
+            );
+        }
+
+        throw new UsernameNotFoundException("해당하는 유저를 찾을 수 없습니다.");
     }
-
 }
+

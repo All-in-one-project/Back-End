@@ -35,7 +35,8 @@ public class Enrollment {
     /* ----------------- Functions ---------------- */
     /* -------------------------------------------- */
     @Builder
-    public Enrollment(Student student, Lecture lecture) {
+    public Enrollment(Integer id, Student student, Lecture lecture) {
+        this.id = id;
         this.student = student;
         this.lecture = lecture;
     }
