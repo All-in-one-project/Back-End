@@ -61,7 +61,7 @@ public class EnrollmentService {
                 .build()
         );
 
-        // 6. 신청 인원 증가
+        // 5. 신청 인원 증가
         lecture.incrementEnrolledCount();
     }
 
@@ -86,6 +86,10 @@ public class EnrollmentService {
         // 4. 신청 인원 감소
         lecture.decrementEnrolledCount();
     }
+
+    /* ================================================================= */
+    //                               정보 조회                             //
+    /* ================================================================= */
 
     /**
      * 수강 신청 내역 조회
