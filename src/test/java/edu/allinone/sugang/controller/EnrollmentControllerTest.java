@@ -6,6 +6,7 @@ import edu.allinone.sugang.domain.Lecture;
 import edu.allinone.sugang.domain.Professor;
 import edu.allinone.sugang.domain.Subject;
 import edu.allinone.sugang.dto.request.EnrollmentDTO;
+import edu.allinone.sugang.dto.response.CreditDTO;
 import edu.allinone.sugang.repository.LectureRepository;
 import edu.allinone.sugang.service.EnrollmentService;
 import org.junit.jupiter.api.BeforeEach;
@@ -201,7 +202,7 @@ public class EnrollmentControllerTest {
     @Test
     @DisplayName("학점 갱신 테스트")
     public void testUpdateCredits() throws Exception {
-        Mockito.when(enrollmentService.updateCredits(anyInt())).thenReturn(List.of());
+        Mockito.when(enrollmentService.updateCredits(anyInt())).thenReturn((CreditDTO) List.of());
 
         mockMvc.perform(get("/enrollment/credit")
                         .param("studentId", "1"))

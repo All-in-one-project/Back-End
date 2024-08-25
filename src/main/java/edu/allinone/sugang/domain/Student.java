@@ -52,21 +52,8 @@ public class Student implements UserDetails {
     @OneToMany(mappedBy = "student", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Enrollment> enrollments;
 
-//    @OneToMany(mappedBy = "student", cascade = CascadeType.REMOVE, orphanRemoval = true)
-//    private List<Basket> baskets;
-
-    /* -------------------------------------------- */
-    /* ----------------- Functions ---------------- */
-    /* -------------------------------------------- */
-    // 신청 가능 학점 증가
-    public void increaseMaxCredits(int credits) {
-        this.maxCredits += credits;
-    }
-
-    // 신청 가능 학점 감소
-    public void decreaseMaxCredits(int credits) {
-        this.maxCredits -= credits;
-    }
+    @OneToMany(mappedBy = "student", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Basket> baskets;
 
     /* -------------------------------------------- */
     /* ----------------- Overriding --------------- */
