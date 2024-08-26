@@ -16,7 +16,10 @@ public class RedisConfig {
     @Bean
     @Primary // 우선순위 설정해서 Bean 충돌 방지
     public ReactiveRedisConnectionFactory reactiveRedisConnectionFactory() {
-        return new LettuceConnectionFactory("43.202.223.188", 6379);
+        // 비밀번호를 추가로 설정
+        LettuceConnectionFactory factory = new LettuceConnectionFactory("43.202.223.188", 6379);
+        factory.setPassword("allinone1234"); // Redis 서버의 비밀번호 설정
+        return factory;
     }
 
     @Bean
