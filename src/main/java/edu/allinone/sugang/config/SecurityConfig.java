@@ -50,7 +50,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
                                 .requestMatchers("/login", "/admin/login").permitAll()  // 모든 사용자 접근 허용
-                                .requestMatchers("/schedule", "/enrollment/**", "/lecture", "/basket/**", "/notice/**", "/faq/**", "/api/**", "/webflux/**", "/accessibilityfeature/**", "/student/**").hasAuthority("USER") // user 권한이 있어야 접근 가능
+                                .requestMatchers("/schedule", "/enrollment/**", "/lecture", "/basket/**", "/notice/**", "/faq/**", "/api/**", "/webflux/**", "/accessibilityfeature/**", "/mypage/**", "/enrollment").hasAuthority("USER") // user 권한이 있어야 접근 가능
                                 .requestMatchers("/admin/**").hasAuthority("ADMIN")  // admin 권한이 있어야 접근 가능
                                 .requestMatchers("/logout").authenticated()
                                 .anyRequest().authenticated()  // 모든 요청에 대해 인증 필요
