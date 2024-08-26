@@ -61,8 +61,8 @@ public class Lecture {
     @OneToMany(mappedBy = "lecture", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Schedule> schedules;
 
-//    @OneToMany(mappedBy = "lecture", cascade = CascadeType.REMOVE, orphanRemoval = true)
-//    private List<Basket> baskets;
+    @OneToMany(mappedBy = "lecture", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Basket> baskets;
 
     /* -------------------------------------------- */
     /* ----------------- Functions ---------------- */

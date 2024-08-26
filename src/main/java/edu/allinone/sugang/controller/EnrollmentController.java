@@ -23,7 +23,7 @@ public class EnrollmentController {
     private final LectureRepository lectureRepository;
 
     /* ================================================================= */
-    //                              수강 신청                            //
+    //                               수강 신청                             //
     /* ================================================================= */
 
     /**

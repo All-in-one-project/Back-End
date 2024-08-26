@@ -61,11 +61,8 @@ public class EnrollmentService {
                 .build()
         );
 
-        // 6. 신청 인원 증가
+        // 5. 신청 인원 증가
         lecture.incrementEnrolledCount();
-
-        // 7. 신청 가능 학점 감소
-        student.decreaseMaxCredits(lecture.getSubject().getCredit());
     }
 
     /**
@@ -88,10 +85,11 @@ public class EnrollmentService {
 
         // 4. 신청 인원 감소
         lecture.decrementEnrolledCount();
-
-        // 5. 신청 가능 학점 증가
-        student.increaseMaxCredits(lecture.getSubject().getCredit());
     }
+
+    /* ================================================================= */
+    //                               정보 조회                             //
+    /* ================================================================= */
 
     /**
      * 수강 신청 내역 조회
@@ -159,7 +157,7 @@ public class EnrollmentService {
      */
 
     /* ================================================================= */
-    //                              정보 갱신                            //
+    //                               정보 갱신                             //
     /* ================================================================= */
 
     /**
@@ -190,7 +188,7 @@ public class EnrollmentService {
      * 학점 갱신
      */
     @Transactional
-    public List<CreditDTO> updateCredits(Integer studentId) {
+    public CreditDTO updateCredits(Integer studentId) {
         // 1. 수강 신청 내역 가져오기
         List<Enrollment> enrollments = getEnrollments(studentId);
 
@@ -204,12 +202,11 @@ public class EnrollmentService {
                 .reduce(0, Integer::sum);
 
         // 4. 학점 정보 반환
-        return enrollments.stream()
-                .map(enrollment -> CreditDTO.builder()
-                        .studentId(studentId) // 학생 id 추가
-                        .maxCredit(enrollment.getStudent().getMaxCredits()) // 최대 학점 추가
-                        .EnrolledCredit(totalCredit) // 신청 학점 추가
-                        .build())
-                .collect(Collectors.toList());
+        return CreditDTO.builder()
+                .studentId(studentId)
+                .maxCredit(studentRepository.findById(studentId).
+                        orElseThrow(() -> new IllegalArgumentException("해당 학생이 존재하지 않습니다.")).getMaxCredits())
+                .EnrolledCredit(totalCredit)
+                .build();
     }
 }
