@@ -90,6 +90,8 @@ public class SecurityConfig {
                         .allowedOrigins("http://43.202.223.188")
                         .allowedOrigins("http://localhost:3000")  // React 애플리케이션이 실행되는 도메인
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
+                        .allowedHeaders("Authorization", "Content-Type", "X-Requested-With", "Accept", "Origin")  // 허용할 요청 헤더
+                        .exposedHeaders("Authorization", "Content-Type")  // 클라이언트에 노출할 응답 헤더
                         .allowCredentials(true);
             }
         };
