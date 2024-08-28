@@ -9,4 +9,5 @@ public class SubjectDTO {
     private String subjectCode;
     private String professorName;
     private String lectureTime;
+    private String lectureDescription;
 }
