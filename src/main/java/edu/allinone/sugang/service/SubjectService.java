@@ -30,6 +30,7 @@ public class SubjectService {
     private ScheduleRepository scheduleRepository;
 
 
+
     // 특정 학부 ID에 해당하는 과목 목록을 반환하는 메서드
     public List<SubjectDTO> getSubjectsByDepartmentId(Integer departmentId) {
         // Department 엔티티 리스트를 SubjectDTO 리스트로 변환하여 반환
@@ -54,6 +55,7 @@ public class SubjectService {
         Lecture lecture = lectureRepository.findBySubjectId(subject.getId()).stream().findFirst().orElse(null);
         if (lecture != null) {
             dto.setSubjectCode(lecture.getLectureNumber());
+            dto.setLectureDescription(lecture.getLectureDescription());
 
             // 교수 이름 설정
             Professor professor = lecture.getProfessor();
