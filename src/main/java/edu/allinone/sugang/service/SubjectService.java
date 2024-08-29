@@ -54,8 +54,10 @@ public class SubjectService {
         // Lecture 정보를 통해 과목 코드, 교수 이름, 강의 시간 설정
         Lecture lecture = lectureRepository.findBySubjectId(subject.getId()).stream().findFirst().orElse(null);
         if (lecture != null) {
-            dto.setSubjectCode(lecture.getLectureNumber());
-            dto.setLectureDescription(lecture.getLectureDescription());
+            dto.setId(subject.getId()); // 과목 ID 설정
+            dto.setSubjectCode(lecture.getLectureNumber()); //과목코드 설정
+            dto.setLectureDescription(lecture.getLectureDescription()); //강의계획서 설정
+            dto.setTargetGrade(subject.getTargetGrade());  // 대상 학년 설정
 
             // 교수 이름 설정
             Professor professor = lecture.getProfessor();
