@@ -1,6 +1,5 @@
 package edu.allinone.sugang.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.allinone.sugang.security.JwtAuthenticationFilter;
 import edu.allinone.sugang.security.JwtTokenProvider;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,8 +22,6 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 @Configuration
 @EnableWebSecurity // Spring Security의 웹 보안 지원을 활성화
@@ -74,8 +71,8 @@ public class SecurityConfig {
                 // 로그아웃 성공 시 200 OK
                 response.setStatus(HttpServletResponse.SC_OK);
 
-                // 홈화면으로 리다이렉트
-                response.sendRedirect("/home");
+                // 로그인 화면으로 리다이렉트
+                response.sendRedirect("/login");
             }
         };
     }
