@@ -1,6 +1,5 @@
 package edu.allinone.sugang.service;
 
-import edu.allinone.sugang.domain.Department;
 import edu.allinone.sugang.domain.Student;
 import edu.allinone.sugang.dto.JwtTokenDTO;
 import edu.allinone.sugang.dto.response.StudentDTO;
@@ -24,7 +23,6 @@ public class StudentLoginService {
     private final StudentRepository studentRepository;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
-    Department department;
 
     @Transactional
     public StudentDTO signIn(String username, String password) {
@@ -46,7 +44,7 @@ public class StudentLoginService {
         return new StudentDTO(
                 student.getStudentNumber(),
                 student.getId(),
-                student.getDepartment().getDepartmentName(),
+                student.getDepartment().getId(),
                 student.getStudentName(),
                 student.getGrade(),
                 student.getMaxCredits(),
