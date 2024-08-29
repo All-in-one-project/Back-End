@@ -10,7 +10,7 @@ import lombok.*;
 public class StudentDTO {
     private String studentNumber;
     private Integer studentId;
-    private Integer departmentId;
+    private String departmentName;
     private String studentName;
     private String grade;
     private int maxCredits;
