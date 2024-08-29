@@ -49,8 +49,6 @@ public class Student implements UserDetails {
     @JoinColumn(name = "department_id")
     private Department department;
 
-    private Department departmentName;
-
     @OneToMany(mappedBy = "student", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Enrollment> enrollments;
 
