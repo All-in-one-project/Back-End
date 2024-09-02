@@ -24,7 +24,6 @@ public class StudentLoginService {
     private final StudentRepository studentRepository;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
-    private Department department;
 
     @Transactional
     public StudentDTO signIn(String username, String password) {
@@ -46,7 +45,7 @@ public class StudentLoginService {
         return new StudentDTO(
                 student.getStudentNumber(),
                 student.getId(),
-                department.getDepartmentName(),
+                student.getDepartment().getDepartmentName(),
                 student.getStudentName(),
                 student.getGrade(),
                 student.getMaxCredits(),
