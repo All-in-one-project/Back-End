@@ -30,7 +30,7 @@ public class CourseHistory {
 
     @ManyToOne
     @JoinColumn(name = "course_id")
-    private Lecture lecture;
+    private Subject subject;
 
     /* -------------------------------------------- */
     /* ------------ Information Column ------------ */

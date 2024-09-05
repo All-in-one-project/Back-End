@@ -6,7 +6,8 @@ import lombok.Setter;
 @Getter @Setter
 public class CourseDTO {
 
-    private Integer courseId;
+    private String subjectDivision;
+    private String subjectName;
     private Integer semester;
 
 }

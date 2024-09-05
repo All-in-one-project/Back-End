@@ -70,7 +70,8 @@ public class MyPageService {
                 .map(courseHistory -> {
                     CourseDTO dto = new CourseDTO();
 
-                    dto.setCourseId(courseHistory.getLecture().getId());
+                    dto.setSubjectDivision(courseHistory.getSubject().getSubjectDivision()); // 과목 구분 반환
+                    dto.setSubjectName(courseHistory.getSubject().getSubjectName()); // 과목 이름 반환
                     dto.setSemester(courseHistory.getSemester()); // 과목을 수강한 학기 반환
 
                     return dto;
