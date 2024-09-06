@@ -1,23 +1,27 @@
 package edu.allinone.sugang.controller;
 
-import edu.allinone.sugang.dto.LectureDTO;
-import edu.allinone.sugang.service.LectureService;
+import edu.allinone.sugang.dto.CourseDTO;
+import edu.allinone.sugang.dto.StudentStatusDTO;
+import edu.allinone.sugang.service.MyPageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/student")
+@RequestMapping("/mypage")
 public class MyPageController {
-    @Autowired
-    private LectureService lectureService;
 
-    @GetMapping("/{subjectId}")
-    public List<LectureDTO> getLecturesBySubjectIdAndTargetGrade(@PathVariable Integer subjectId, @PathVariable String targetGrade) {
-        return lectureService.getLecturesBySubjectIdAndTargetGrade(subjectId, targetGrade);
+    @Autowired
+    private MyPageService myPageService;
+
+    @GetMapping("/{studentId}")
+    public List<StudentStatusDTO> getStudentStatusByStudentId(@PathVariable Integer studentId, @RequestParam Integer departmentId) {
+        return myPageService.getStudentStatusByStudentId(studentId, departmentId);
+    }
+
+    @GetMapping("/enrollment")
+    public List<CourseDTO> getCourseBySemester(@RequestParam Integer semester) {
+        return myPageService.getCourseBySemester(semester);
     }
 }

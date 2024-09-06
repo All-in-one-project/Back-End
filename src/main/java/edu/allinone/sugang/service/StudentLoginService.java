@@ -24,7 +24,6 @@ public class StudentLoginService {
     private final StudentRepository studentRepository;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
-    Department department;
 
     @Transactional
     public StudentDTO signIn(String username, String password) {
