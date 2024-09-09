@@ -1,6 +1,5 @@
 package edu.allinone.sugang.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.allinone.sugang.security.JwtAuthenticationFilter;
 import edu.allinone.sugang.security.JwtTokenProvider;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,8 +22,6 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 @Configuration
 @EnableWebSecurity // Spring Security의 웹 보안 지원을 활성화
@@ -50,7 +47,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
                                 .requestMatchers("/login", "/admin/login").permitAll()  // 모든 사용자 접근 허용
-                                .requestMatchers("/schedule", "/enrollment/**", "/lecture", "/basket/**", "/notice/**", "/faq/**", "/api/**", "/webflux/**", "/accessibilityfeature/**", "/student/**").hasAuthority("USER") // user 권한이 있어야 접근 가능
+                                .requestMatchers("/schedule", "/enrollment/**", "/lecture", "/basket/**", "/notice/**", "/faq/**", "/api/**", "/webflux/**", "/accessibilityfeature/**", "/mypage/**", "/enrollment").hasAuthority("USER") // user 권한이 있어야 접근 가능
                                 .requestMatchers("/admin/**").hasAuthority("ADMIN")  // admin 권한이 있어야 접근 가능
                                 .requestMatchers("/logout").authenticated()
                                 .anyRequest().authenticated()  // 모든 요청에 대해 인증 필요
@@ -74,8 +71,8 @@ public class SecurityConfig {
                 // 로그아웃 성공 시 200 OK
                 response.setStatus(HttpServletResponse.SC_OK);
 
-                // 홈화면으로 리다이렉트
-                response.sendRedirect("/home");
+                // 로그인 화면으로 리다이렉트
+                response.sendRedirect("/login");
             }
         };
     }
@@ -90,6 +87,8 @@ public class SecurityConfig {
                         .allowedOrigins("http://43.202.223.188")
                         .allowedOrigins("http://localhost:3000")  // React 애플리케이션이 실행되는 도메인
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
+                        .allowedHeaders("Authorization", "Content-Type", "X-Requested-With", "Accept", "Origin")  // 허용할 요청 헤더
+                        .exposedHeaders("Authorization", "Content-Type")  // 클라이언트에 노출할 응답 헤더
                         .allowCredentials(true);
             }
         };
