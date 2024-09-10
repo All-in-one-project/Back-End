@@ -12,4 +12,6 @@ public class SubjectDTO {
     private String lectureDescription;
     private Integer id;
     private String targetGrade;
+    private Integer lectureId; // 강의 ID 추가
+
 }
