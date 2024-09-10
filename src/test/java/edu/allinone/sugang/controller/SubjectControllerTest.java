@@ -47,18 +47,18 @@ public class SubjectControllerTest {
         subject1.setSubjectName("자료구조"); // 과목 이름 설정
         subject1.setSubjectDivision("전공"); // 과목 구분 설정
         subject1.setTargetGrade("2학년"); // 과목 대상 학년 설정
-        subject1.setHoursPerWeek(3); // 주당 강의 시간 설정
-        subject1.setCredit(3); // 학점 설정
-        subject1.setDepartmentId(1); // 과목이 속한 학부 ID 설정
+        //subject1.setHoursPerWeek(3); // 주당 강의 시간 설정
+        //subject1.setCredit(3); // 학점 설정
+        //subject1.setDepartmentId(1); // 과목이 속한 학부 ID 설정
 
         SubjectDTO subject2 = new SubjectDTO();
         subject2.setId(2); // 과목 객체의 ID 설정
         subject2.setSubjectName("운영체제"); // 과목 이름 설정
         subject2.setSubjectDivision("전공"); // 과목 구분 설정
         subject2.setTargetGrade("3학년"); // 과목 대상 학년 설정
-        subject2.setHoursPerWeek(3); // 주당 강의 시간 설정
-        subject2.setCredit(3); // 학점 설정
-        subject2.setDepartmentId(1); // 과목이 속한 학부 ID 설정
+        //subject2.setHoursPerWeek(3); // 주당 강의 시간 설정
+        //subject2.setCredit(3); // 학점 설정
+        //subject2.setDepartmentId(1); // 과목이 속한 학부 ID 설정
 
         // 과목 목록을 리스트에 추가
         subjectList = Arrays.asList(subject1, subject2);
