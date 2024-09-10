@@ -58,6 +58,7 @@ public class SubjectService {
             dto.setSubjectCode(lecture.getLectureNumber()); //과목코드 설정
             dto.setLectureDescription(lecture.getLectureDescription()); //강의계획서 설정
             dto.setTargetGrade(subject.getTargetGrade());  // 대상 학년 설정
+            dto.setLectureId(lecture.getId()); // Lecture ID 설정 추가
 
             // 교수 이름 설정
             Professor professor = lecture.getProfessor();
